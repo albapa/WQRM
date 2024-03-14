@@ -7,7 +7,7 @@ def DataGenerator(Key):
         alpha = 0
 
     omega_0 = int(Key[2]) * (np.pi / 30)
-    theta = np.arange(0, (int(Key[3])*360 + 1)) 
+    theta = np.arange(0, ((int(Key[3])*360)+int(Key[3])))
     
     r = 25/1000
 
@@ -36,7 +36,7 @@ def DataGenerator(Key):
 
     # Function to pad with nan
     def pad_with_nan(v):
-        return np.pad(v, (0, 721 - len(v)), 'constant', constant_values=np.nan)
+        return np.pad(v, (0, ((int(Key[3])*360)+int(Key[3])) - len(v)), 'constant', constant_values=np.nan)
 
     XS1X = pad_with_nan(XS1X)
     XS1Y = pad_with_nan(XS1Y)
