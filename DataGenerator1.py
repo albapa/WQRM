@@ -32,7 +32,7 @@ def DataGenerator(Key):
     C = (h * (h - r * np.cos(np.radians(theta + 180)) + 2 * r * (h * np.cos(np.radians(theta + 180)) - r))) / ((h - r * np.cos(np.radians(theta + 180)))**3)
     AS1X = c * r * np.sin(np.radians(theta)) * C * omega**2
     AS2X = b * r * np.sin(np.radians(theta)) * C * omega**2
-    AS1Y = np.gradient(VS1Y, theta) * (omega**2)
+    AS1Y = (np.diff(VS1Y) / np.diff(theta)) * (omega[:-1] * (360 / (2 * np.pi)))
 
     # Function to pad with nan
     def pad_with_nan(v):
