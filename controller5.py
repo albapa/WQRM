@@ -520,7 +520,7 @@ class Ui_MainWindow(object):
         self.CorrelateRight.setTabText(self.CorrelateRight.indexOf(self.CorrelateDisplacement), _translate("MainWindow", "AS1X"))
         self.Info8.setText(_translate("MainWindow", "Corelate receives data from the mechanisms Arduino sensor and plots those values against the value obtained by the kinematic analysis of the system. It allows the comparison of the theoretical and predicted values."))
         self.Info9.setText(_translate("MainWindow", "To get started defining the angular acceleration, initial angular velocity, number of cycles and the crank length."))
-        self.Info10.setText(_translate("MainWindow", "Once started the values will begin populating the plot on the right. Once completed you will be able to select the displacement, velocity, and acceleration tabs."))
+        self.Info10.setText(_translate("MainWindow", "Once the rotation has completed the graph to the right will be populated with the model data and the collected data for both sensor S1 & S2."))
         self.CRaa.setCurrentText(_translate("MainWindow", "Angular Acceleration"))
         self.CRaa.setItemText(0, _translate("MainWindow", "Angular Acceleration"))
         self.CRaa.setItemText(1, _translate("MainWindow", "0 ms^-2"))
