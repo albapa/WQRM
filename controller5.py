@@ -582,19 +582,49 @@ class Ui_MainWindow(object):
         
 ### CONNECT ARDUINO ###
 
+#    def ConnectArduino(self):
+#        global port
+#        self.StartStatus.setText("Connecting...")
+#        ports = list(serial.tools.list_ports.comports())
+#        coned = ""
+#        for p in ports:
+#            coned += str(p)
+#        if coned.count("Arduino") == 2:
+#            self.StartStatus.setText("Multiple Arduinos Detected! Please disconnect Additional Arduino.")
+#        elif coned.count("Arduino") == 1:
+#            index = coned.find("Arduino")
+#            port = coned[index - 7:index]
+#            port = port[:-3]
+#            self.StartStatus.setText("Device found on port: " + str(port) + ". Please continue.")
+#            ser = serial.Serial(str(port), 74880, timeout=1)
+#            value_to_send = "PythonArduinoConnected"
+#            ser.write(value_to_send.encode())
+#            ser.close()
+#
+#            # Lubrication PopUp
+#            popup = QMessageBox()
+#            popup.setWindowTitle("Lubrication Notice")
+#            popup.setText("Please note that if you haven’t already, please lubricate the conrod cut out which are populated with metal fixtures. Lubricate the while length of the cut outs on both sides. Use silicone or petroleum-based lubricant previously Vaseline applied with a cotton bud was used. If lubrication is not applied or an insignificant amount is applied the device will be seen to 'jitter'.")
+#            self.CalibrateStatus.setText("Connected, Unaligned")
+#            popup.exec_()
+#
+#        elif coned.count("Arduino") == 0:
+#            self.StartStatus.setText("WQRM Not Detected. Please Check Connection.")
+#        self.Connect.setText("Recheck Connection")
+
     def ConnectArduino(self):
+        import numpy as np
         global port
         self.StartStatus.setText("Connecting...")
         ports = list(serial.tools.list_ports.comports())
-        coned = ""
-        for p in ports:
-            coned += str(p)
-        if coned.count("Arduino") == 2:
+        coned = [str(p) for p in ports]
+
+        found = [("IOUSBHostDevice" in c) for c in coned]
+        if np.count_nonzero(found) > 1:
             self.StartStatus.setText("Multiple Arduinos Detected! Please disconnect Additional Arduino.")
-        elif coned.count("Arduino") == 1:
-            index = coned.find("Arduino")
-            port = coned[index - 7:index]
-            port = port[:-3]
+        elif np.count_nonzero(found) == 1:
+            index = np.argwhere(found)[0][0]
+            port = coned[index].split()[0]
             self.StartStatus.setText("Device found on port: " + str(port) + ". Please continue.")
             ser = serial.Serial(str(port), 74880, timeout=1)
             value_to_send = "PythonArduinoConnected"
@@ -608,7 +638,7 @@ class Ui_MainWindow(object):
             self.CalibrateStatus.setText("Connected, Unaligned")
             popup.exec_()
 
-        elif coned.count("Arduino") == 0:
+        elif np.count_nonzero(found) == 0:
             self.StartStatus.setText("WQRM Not Detected. Please Check Connection.")
         self.Connect.setText("Recheck Connection")
 
